@@ -84,14 +84,11 @@ def clean_data_FamilySize(combine):
     
 def clean_data_Fare():
     combine['Fare'].fillna(combine['Fare'].median(),inplace=True)
-    mean=combine[['FamilySize','Fare']].groupby('FamilySize',as_index=False).mean()
-    combine['FareBand']=pd.cut(combine['Fare'],4)
-    print(combine['FareBand'].unique())
-    combine.loc[combine['Fare']<=128,['Fare']]=0
+    print(combine['Fare'].describe())
+    combine.loc[combine['Fare']<=7.9,['Fare']]=0
     combine.loc[(combine['Fare']>7.9)&(combine['Fare']<=14.5),['Fare']]=1
     combine.loc[(combine['Fare']>14.5)&(combine['Fare']<=31.3),['Fare']]=2
     combine.loc[combine['Fare']>31.3,['Fare']]=3
-    combine.drop('FareBand',axis=1,inplace=True)
     
 def clean_data_Age():
     guess_ages = np.zeros((5,3))
